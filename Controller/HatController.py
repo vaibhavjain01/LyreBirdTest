@@ -5,6 +5,7 @@ Created on Oct 30, 2018
 '''
 import random;
 from AppConfig import *; #@UnusedWildImport 
+from Model.MagicHat import MagicHat
 
 class HatController(object):
     '''
@@ -27,42 +28,14 @@ class HatController(object):
     
     def hatDriver(self):
         print("*********************************************");
-        shuffeledMemberNames, shuffeledMembers = self.shuffleMemberNames();
-        self.distributeGifts(shuffeledMemberNames, shuffeledMembers);
-        
+        magicHat = MagicHat(self.logger, self.viewObj, self.registeredMembers);
+        shuffeledMemberNames, shuffeledMembers = magicHat.shuffleMemberNames();
+        results = magicHat.distributeGifts(shuffeledMemberNames, shuffeledMembers);
+        if(results == None):
+            self.viewObj.displayGeneralMessage(MSG_GIFT_EXCHANGE_NOT_POSSIBLE);
+        else:
+            for res in results:
+                self.viewObj.displayText(res[0] + " < " + res[1]);
         return SYS_STATE_HOME;
     
-    def shuffleMemberNames(self):
-        memberNames = list(self.registeredMembers.keys());
-        memberNames = (memberNames.copy());
-        random.shuffle(memberNames);
-        memberObjs = list(self.registeredMembers.values());
-        memberObjs = memberObjs.copy();
-        random.shuffle(memberObjs);
-        return memberNames, memberObjs;
-            
-    def distributeGifts(self, shuffeledMemberNames, shuffeledMembers):
-        if(len(shuffeledMembers) <= 0):
-            return;
-        memberRepick = [];
-        
-        ctrOne = 0;
-        ctrTwo = 0;
-        
-        while(ctrOne < len(shuffeledMemberNames)) and (ctrTwo < len(shuffeledMembers)):
-        #for ctrOne, ctrTwo in zip(range(len(shuffeledMemberNames)), range(len(shuffeledMembers))):
-            giver = shuffeledMemberNames[ctrOne];
-            picker = shuffeledMembers[ctrTwo].getMemberName();
-            pickerPartners = shuffeledMembers[ctrTwo].getPartners();
-            
-            if((picker == giver) or 
-               ((pickerPartners != None) and (giver in pickerPartners))):
-                memberRepick.append(shuffeledMembers[ctrTwo]);
-                ctrTwo += 1;
-            else:
-                self.viewObj.displayText(picker + " << " + giver);
-                ctrOne += 1;
-                ctrTwo += 1;
-        
-        self.distributeGifts(shuffeledMemberNames[ctrOne:], memberRepick);
-        return;
+    

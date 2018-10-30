@@ -13,3 +13,4 @@
 13=Member Added
 14=picked gift brought by
 15=Welcome to Mr. Raccoon's Automated Gift Exchange Application
+16=Gift exchange is not possible with current member registrations.
