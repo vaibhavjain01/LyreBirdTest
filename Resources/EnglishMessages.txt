@@ -1,0 +1,15 @@
+1=Good Bye!
+2=Manage Members
+3=Show Results
+4=Quit
+5=Add Member
+6=Remove Member
+7=Show Members
+8=Go Back
+9=Enter Member Name: 
+10=Enter Member's Partner Names (Separated by ',' -- Ex: Anil,Joseph,Susan)
+11=Member Not Found
+12=Member Removed
+13=Member Added
+14=picked gift brought by
+15=Welcome to Mr. Raccoon's Automated Gift Exchange Application
