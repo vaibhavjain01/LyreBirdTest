@@ -96,7 +96,8 @@ class MemberController(object):
         newMemberName, newMemberPartnersStr = self.getNewMemberDetails();
         self.addMemberToDict(newMemberName, newMemberPartnersStr);
         self.addMemberToFile(newMemberName, newMemberPartnersStr);
-        self.viewObj.displayGeneralMessage(MSG_MEMBER_ADDED);
+        if(self.viewObj != None):
+            self.viewObj.displayGeneralMessage(MSG_MEMBER_ADDED);
         return SYS_STATE_MEMBER;
     
     def getNewMemberDetails(self):

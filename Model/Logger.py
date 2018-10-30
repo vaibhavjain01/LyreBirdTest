@@ -26,6 +26,7 @@ class Logger(object):
             self.logConsole(logLevel, logData);
         else:
             self.logView(logLevel, logData, logTarget);
+        return True;
             
     def logConsole(self, logLevel, logData):
         '''
@@ -34,6 +35,7 @@ class Logger(object):
         '''
         if(logLevel <= APP_LOG_LEVEL):
             print(logData);
+        return True;
             
     def logView(self, logLevel, logData, logTarget):
         '''
