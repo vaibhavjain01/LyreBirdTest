@@ -16,17 +16,22 @@ class HatController(object):
     registeredMembers = None; ''' Key: Registered Member, Value : Object of Family Member '''
     viewObj = None;
     
-    shuffeledMemberNames = [];
-    
     def __init__(self, logger, viewObj, registeredMembers):
         '''
         Default Constructor
+        logger: (Object) The common logger object
+        viewObj: (Object) The common view object
+        registeredMembers: (Dictionary) The key,value pair of registered members
         '''
         self.logger = logger;
         self.registeredMembers = registeredMembers;
         self.viewObj = viewObj;
     
     def hatDriver(self):
+        '''
+        This function is responsible for using Hat Model to calculate results.
+        return: Returns the new state
+        '''
         print("*********************************************");
         magicHat = MagicHat(self.logger, self.viewObj, self.registeredMembers);
         shuffeledMemberNames, shuffeledMembers = magicHat.shuffleMemberNames();

@@ -25,6 +25,9 @@ class FamilyMember(object):
         self.giftBroughtByMember = giftBroughtByMember;
         
     def modifyMemberName(self, newName):
+        '''
+        Function to let user modify name. Never used in current scope
+        '''
         if(self.validateNewName == True):
             self.memberName = newName;
         else:
@@ -32,13 +35,24 @@ class FamilyMember(object):
         return True;
             
     def validateNewName(self, newName):
+        '''
+        Function to validate user name. Never used in current scope
+        '''
         if(len(newName > 1)):
             return True;
         else:
             return False;
         
     def getMemberName(self):
+        '''
+        Getter function to get the member name
+        return: (str) The member name
+        '''
         return self.memberName;
     
     def getPartners(self):
+        '''
+        Getter function to retrieve the list of partners
+        return: (List) List of all partners of this member
+        '''
         return self.memberPartners;

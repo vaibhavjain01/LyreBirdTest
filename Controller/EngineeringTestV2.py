@@ -14,9 +14,6 @@ class GiftExchange(object):
     '''
     Automation of gift exchange process for Mr. Raccoon
     '''
-
-    ''' Data Structures for Application '''
-    namesInHat = None;    ''' Registered Family Members '''
     
     ''' Controller and Other Class Objects '''
     homeScreenController = None;
@@ -49,10 +46,18 @@ class GiftExchange(object):
                 self.state = self.procesStateResults();
             
     def welcomeMessage(self):
+        '''
+        A welcome message whenever application starts
+        '''
         print("*********************************************");
         self.viewObj.displayGeneralMessage(MSG_WELLCOME_MESSAGE);
+        return;
     
     def processStateHome(self):
+        '''
+        Initiate controller for home screen
+        return: The new state of system
+        '''
         oprResult = self.homeScreenController.homeScreenDriver();
         if(oprResult == SYS_STATE_EXIT):
             self.viewObj.displayGeneralMessage(MSG_GOOD_BYE);
@@ -61,10 +66,18 @@ class GiftExchange(object):
         return oprResult;
     
     def processStateMember(self):
+        '''
+        Initiate controller for member screen
+        return: The new state of system
+        '''
         oprResult = self.memberController.memberDriver();
         return oprResult;
         
     def procesStateResults(self):
+        '''
+        Initiate controller for results calculation
+        return: The new state of system
+        '''
         oprResult = self.hatController.hatDriver();
         return oprResult;
     
@@ -79,5 +92,3 @@ class GiftExchange(object):
         self.hatController = HatController(self.logger, self.viewObj, self.memberController.getRegisteredMembers());
         self.welcomeMessage();
         return;
-
-ge = GiftExchange();

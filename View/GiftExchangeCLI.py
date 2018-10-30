@@ -30,6 +30,10 @@ class GiftExchangeCLI(object):
             with open(APP_LANGUAGE_FILE) as f:
                 fileContent = f.readlines();
         
+        if(fileContent == None):
+            print(APP_LANGUAGE_FILE);
+            exit();
+            
         for line in fileContent:
             tokens = line.split("=");
             self.messageDict[int(tokens[0])] = tokens[1];

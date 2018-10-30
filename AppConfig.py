@@ -35,12 +35,12 @@ SYS_STATE_EXIT = 3;
 """
 Saved Member List
 """
-SAVED_MEMBER_FILE = dirname(os.getcwd()) + "\\Resources\\memberList.txt";
+SAVED_MEMBER_FILE = (os.getcwd()) + "\\Resources\\memberList.txt";
 
 """
 Language Config
 """
-APP_LANGUAGE_FILE = dirname(os.getcwd()) + "\\Resources\\EnglishMessages.txt";
+APP_LANGUAGE_FILE = (os.getcwd()) + "\\Resources\\EnglishMessages.txt";
 MSG_GOOD_BYE = 1;
 MSG_MANAGE_MEMBERS = 2;
 MSG_SHOW_RESULTS = 3;

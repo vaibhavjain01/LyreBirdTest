@@ -20,6 +20,9 @@ class MagicHat(object):
     def __init__(self, logger, viewObj, registeredMembers):
         '''
         Default Constructor
+        logger: (Object) The common logger object
+        viewObj: (Object) The common view object
+        registeredMembers: (Dictionary) The key,value pair of registered members
         '''
         self.logger = logger;
         self.registeredMembers = registeredMembers;
@@ -27,6 +30,10 @@ class MagicHat(object):
         self.distribution = [];
     
     def shuffleMemberNames(self):
+        '''
+        Shuffles the member names and member objects
+        return: The shuffeled member names, and member objects
+        '''
         memberNames = list(self.registeredMembers.keys());
         memberNames = (memberNames.copy());
         random.shuffle(memberNames);
@@ -36,6 +43,12 @@ class MagicHat(object):
         return memberNames, memberObjs;
         
     def distributeGifts(self, shuffeledMemberNames, shuffeledMembers):
+        '''
+        The recursive function to distribute the gifts among members following the rules.
+        shuffeledMemberNames: (List) The names of all members shuffled
+        shuffeledMembers: (List) The familyMember objects of all members shuffeled
+        return: Returns the list containing gift distribution information
+        '''
         if(len(shuffeledMembers) <= 0):
             return self.distribution;
         memberRepick = [];

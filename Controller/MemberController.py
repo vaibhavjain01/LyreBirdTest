@@ -6,7 +6,6 @@ Created on Oct 30, 2018
 
 from AppConfig import *; #@UnusedWildImport 
 from Model.FamilyMember import FamilyMember
-from Model.Common import Common
 from Model.Gift import Gift
 from pathlib import Path
 import os;
@@ -19,19 +18,23 @@ class MemberController(object):
     logger = None;
     registeredMembers = None; ''' Key: Registered Member, Value : Object of Family Member '''
     viewObj = None;
-    commonObj = None;
     
     def __init__(self, logger, viewObj):
         '''
         Default Constructor
+        logger: (Object) The common logger object
+        viewObj: (Object) The common view object
         '''
         self.logger = logger;
         self.registeredMembers = {};
         self.viewObj = viewObj;
-        self.commonObj = Common;
         self.checkPreviousSaves();
     
     def memberDriver(self):
+        '''
+        Runs the member driver.
+        return: Returns the new state
+        '''
         userOptions = self.generateAvailableOptions();
         choice = self.viewObj.displayUserOptions(userOptions);
         oprResult = self.handleChoice(choice);
@@ -62,6 +65,10 @@ class MemberController(object):
         elif(choice == 5): return SYS_STATE_RESULTS;
     
     def handleShowMembers(self):
+        '''
+        Displays the list of registered members.
+        return: Returns the new state
+        '''
         print("*********************************************");
         for _, member in self.registeredMembers.items():
             mName = member.getMemberName(); 
@@ -82,6 +89,10 @@ class MemberController(object):
         return SYS_STATE_MEMBER;
     
     def handleAddMember(self):
+        '''
+        Adds the new member to the dictionary and updates the file as well for records
+        return: Returns the new state
+        '''
         newMemberName, newMemberPartnersStr = self.getNewMemberDetails();
         self.addMemberToDict(newMemberName, newMemberPartnersStr);
         self.addMemberToFile(newMemberName, newMemberPartnersStr);
@@ -89,30 +100,52 @@ class MemberController(object):
         return SYS_STATE_MEMBER;
     
     def getNewMemberDetails(self):
+        '''
+        Asks the user to input details using view object
+        return: Returns the details entered by user
+        return newMemberName: (str) The name of new member
+        return newMemberPartnersStr: (str) The comma separated list of partners
+        '''
         newMemberName = self.viewObj.getMessagedInput(MSG_ENTER_MEMBER_NAME);
         newMemberPartnersStr = self.viewObj.getMessagedInput(MSG_ENTER_MEMBER_PARTNERS);
         return newMemberName, newMemberPartnersStr;
     
     def addMemberToDict(self, newMemberName, newMemberPartnersStr = None):
+        '''
+        Adds the new member to dictionary
+        newMemberName: (str) The name of new member
+        newMemberPartnersStr: (str) The comma separated list of partners
+        '''
         newMemberName = newMemberName.replace("\n","");
         if(newMemberPartnersStr != None):
             newMemberPartnersStr = newMemberPartnersStr.replace("\n","");
-            newMemberPartners = newMemberPartnersStr.split(","); #self.commonObj.commaSepStrToList(newMemberPartnersStr);
+            newMemberPartners = newMemberPartnersStr.split(",");
         else:
             newMemberPartners = None;
             
         newMemberGift = Gift(newMemberName);
         newMember = FamilyMember(newMemberName, newMemberPartners, newMemberGift);
         self.registeredMembers[newMemberName] = newMember;
+        return;
         
     def addMemberToFile(self, newMemberName, newMemberPartnersStr = None):
+        '''
+        Adds the new member to file
+        newMemberName: (str) The name of new member
+        newMemberPartnersStr: (str) The comma separated list of partners
+        '''
         f= open(SAVED_MEMBER_FILE,"a+");
         if(os.path.getsize(SAVED_MEMBER_FILE) > 2):
             f.write("\n");
         f.write(newMemberName + "=" + newMemberPartnersStr);
         f.close();
+        return;
         
     def handleRemoveMember(self):
+        '''
+        Removes the member from dictionary and updates the file
+        return: Returns the new state
+        '''
         memberToRemove = self.viewObj.getMessagedInput(MSG_ENTER_MEMBER_NAME);
         if(memberToRemove in self.registeredMembers):
             self.registeredMembers.pop(memberToRemove);
@@ -123,6 +156,9 @@ class MemberController(object):
         return SYS_STATE_MEMBER;
     
     def updateFileAfterDelete(self):
+        '''
+        Updates the file after delete operation on member registrations
+        '''
         os.remove(SAVED_MEMBER_FILE);
         for _, member in self.registeredMembers.items():
             partners = "";
@@ -134,11 +170,19 @@ class MemberController(object):
                         partners += ",";
             
             self.addMemberToFile(member.getMemberName(), partners);
+        return;
     
     def getRegisteredMembers(self):
+        '''
+        Getter function for dictionary of registered members
+        return: (Dictionary) The registered members.
+        '''
         return self.registeredMembers;
     
     def checkPreviousSaves(self):
+        '''
+        Checks if there are any saved records in file. If yes, then loads them
+        '''
         fileContent = None;
         # TBD: File Validation
         if(Path(SAVED_MEMBER_FILE).exists()):
