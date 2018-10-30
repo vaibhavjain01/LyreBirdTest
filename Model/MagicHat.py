@@ -5,6 +5,7 @@ Created on Oct 30, 2018
 '''
 
 import random;
+from random import randint, seed;
 
 class MagicHat(object):
     '''
@@ -28,6 +29,7 @@ class MagicHat(object):
         self.registeredMembers = registeredMembers;
         self.viewObj = viewObj;
         self.distribution = [];
+        seed(1);
     
     def shuffleMemberNames(self):
         '''
@@ -41,6 +43,30 @@ class MagicHat(object):
         memberObjs = memberObjs.copy();
         random.shuffle(memberObjs);
         return memberNames, memberObjs;
+        
+    def pickFromHat(self, namesInHat):
+        if(len(namesInHat) == 0):
+            return None;
+        pickedNameIndex = randint(0, len(namesInHat) - 1);
+        return pickedNameIndex;
+        
+    def validatePick(self, picker, pickedName):
+        if(picker.getMemberName() == pickedName):
+            return False;
+        if(picker.getPartners() == None):
+            return True;
+        if(pickedName in picker.getPartners()):
+            return False;
+        return True;
+        
+    def pickAndValidate(self, namesInHat, randomPicker):
+        pickedNameIndex = self.pickFromHat(namesInHat);
+        if(pickedNameIndex == None):
+            return None;
+        
+        result = self.validatePick(randomPicker, namesInHat[pickedNameIndex]);
+        return result, namesInHat[pickedNameIndex];
+        
         
     def distributeGifts(self, shuffeledMemberNames, shuffeledMembers):
         '''
@@ -58,17 +84,15 @@ class MagicHat(object):
         
         while(ctrOne < len(shuffeledMemberNames)) and (ctrTwo < len(shuffeledMembers)):
         #for ctrOne, ctrTwo in zip(range(len(shuffeledMemberNames)), range(len(shuffeledMembers))):
-            giver = shuffeledMemberNames[ctrOne];
+            receiver = shuffeledMemberNames[ctrOne];
             picker = shuffeledMembers[ctrTwo].getMemberName();
-            pickerPartners = shuffeledMembers[ctrTwo].getPartners();
             
-            if((picker == giver) or 
-               ((pickerPartners != None) and (giver in pickerPartners))):
+            res = self.validatePick(shuffeledMembers[ctrTwo], receiver);
+            if(res == False):
                 memberRepick.append(shuffeledMembers[ctrTwo]);
                 ctrTwo += 1;
             else:
-                #self.viewObj.displayText(picker + " << " + giver);
-                self.distribution.append([picker, giver]);
+                self.distribution.append([picker, receiver]);
                 ctrOne += 1;
                 ctrTwo += 1;
         

@@ -39,6 +39,7 @@ class HomeScreen(object):
         userOptions = [];
         userOptions.append(MSG_MANAGE_MEMBERS);
         userOptions.append(MSG_SHOW_RESULTS);
+        userOptions.append(MSG_SIMULATE_TURNS);
         userOptions.append(MSG_QUIT);
         return userOptions;
     
@@ -48,9 +49,13 @@ class HomeScreen(object):
         choice: (int) User's choice
         return: (int) The new system state
         '''
-        if(choice == 1): return self.handleManageMembers();
-        elif(choice == 2): return self.handleShowResults();
-        elif(choice == 3): return SYS_STATE_EXIT;
+        if(choice == SYS_STATE_MEMBER): return self.handleManageMembers();
+        elif(choice == SYS_STATE_RESULTS): return self.handleShowResults();
+        elif(choice == SYS_STATE_SIMULATION): return self.handleSimulation();
+        elif(choice == SYS_STATE_EXIT): return SYS_STATE_EXIT;
+        
+    def handleSimulation(self):
+        return SYS_STATE_SIMULATION;
     
     def handleManageMembers(self):
         '''

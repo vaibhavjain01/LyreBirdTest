@@ -1,3 +1,4 @@
 vj=nasrin
 nasrin=vj
 b=a
+a=b

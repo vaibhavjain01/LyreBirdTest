@@ -14,3 +14,6 @@
 14=picked gift brought by
 15=Welcome to Mr. Raccoon's Automated Gift Exchange Application
 16=Gift exchange is not possible with current member registrations.
+17=Simulate Turns
+18=The pick is invalid as its gifter himself, or his/her partner. The exchange starts again.
+19=Its your turn to pick. Press the enter key to pick.

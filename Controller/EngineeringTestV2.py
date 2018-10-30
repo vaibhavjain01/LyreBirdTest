@@ -9,6 +9,7 @@ from Controller.HomeScreenController import HomeScreen;
 from Controller.MemberController import MemberController;
 from Controller.HatController import HatController;
 from View.GiftExchangeCLI import GiftExchangeCLI;
+from Controller.SimController import SimController
 
 class GiftExchange(object):
     '''
@@ -44,6 +45,8 @@ class GiftExchange(object):
                 self.state = self.processStateMember();
             if(self.state == SYS_STATE_RESULTS):
                 self.state = self.procesStateResults();
+            if(self.state == SYS_STATE_SIMULATION):
+                self.state = self.processStateSimulation();
             
     def welcomeMessage(self):
         '''
@@ -81,6 +84,10 @@ class GiftExchange(object):
         oprResult = self.hatController.hatDriver();
         return oprResult;
     
+    def processStateSimulation(self):
+        oprResult = self.simController.simDriver();
+        return oprResult;
+    
     def initApp(self):
         '''
         This function initializes the home controller and view
@@ -90,5 +97,6 @@ class GiftExchange(object):
         self.homeScreenController = HomeScreen(self.logger, self.viewObj);
         self.memberController = MemberController(self.logger, self.viewObj);
         self.hatController = HatController(self.logger, self.viewObj, self.memberController.getRegisteredMembers());
+        self.simController = SimController(self.logger, self.viewObj, self.memberController.getRegisteredMembers());
         self.welcomeMessage();
         return;
