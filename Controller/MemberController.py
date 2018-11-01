@@ -19,7 +19,7 @@ class MemberController(object):
     registeredMembers = None; ''' Key: Registered Member, Value : Object of Family Member '''
     viewObj = None;
     
-    def __init__(self, logger, viewObj):
+    def __init__(self, logger, viewObj, memberFilePath):
         '''
         Default Constructor
         logger: (Object) The common logger object
@@ -28,7 +28,7 @@ class MemberController(object):
         self.logger = logger;
         self.registeredMembers = {};
         self.viewObj = viewObj;
-        self.checkPreviousSaves();
+        self.checkPreviousSaves(memberFilePath);
     
     def memberDriver(self):
         '''
@@ -180,14 +180,14 @@ class MemberController(object):
         '''
         return self.registeredMembers;
     
-    def checkPreviousSaves(self):
+    def checkPreviousSaves(self, memberFilePath):
         '''
         Checks if there are any saved records in file. If yes, then loads them
         '''
         fileContent = None;
         # TBD: File Validation
-        if(Path(SAVED_MEMBER_FILE).exists()):
-            with open(SAVED_MEMBER_FILE) as f:
+        if(Path(memberFilePath).exists()):
+            with open(memberFilePath) as f:
                 fileContent = f.readlines();
         if(fileContent == None): return;
         for line in fileContent:

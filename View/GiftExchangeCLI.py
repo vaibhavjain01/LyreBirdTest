@@ -14,29 +14,31 @@ class GiftExchangeCLI(object):
     logger = None;
     messageDict = None;
 
-    def __init__(self, logger):
+    def __init__(self, logger, langMsgFilePath):
         '''
         Default Constructor
         '''
         self.logger = logger;
-        self.initMessages();
+        self.initMessages(langMsgFilePath);
     
-    def initMessages(self):
+    def initMessages(self, langMsgFilePath):
         self.messageDict = {};
         
         fileContent = None;
         # TBD: File Validation
-        if(Path(APP_LANGUAGE_FILE).exists()):
-            with open(APP_LANGUAGE_FILE) as f:
+        if(Path(langMsgFilePath).exists()):
+            with open(langMsgFilePath) as f:
                 fileContent = f.readlines();
         
         if(fileContent == None):
-            print(APP_LANGUAGE_FILE);
+            print(langMsgFilePath);
             exit();
             
         for line in fileContent:
             tokens = line.split("=");
             self.messageDict[int(tokens[0])] = tokens[1];
+            
+        return True;
     
     def displayUserOptions(self, userOptions):
         '''

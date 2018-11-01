@@ -93,9 +93,9 @@ class GiftExchange(object):
         This function initializes the home controller and view
         '''
         self.logger = Logger();
-        self.viewObj = GiftExchangeCLI(self.logger);
+        self.viewObj = GiftExchangeCLI(self.logger, APP_LANGUAGE_FILE);
         self.homeScreenController = HomeScreen(self.logger, self.viewObj);
-        self.memberController = MemberController(self.logger, self.viewObj);
+        self.memberController = MemberController(self.logger, self.viewObj, SAVED_MEMBER_FILE);
         self.hatController = HatController(self.logger, self.viewObj, self.memberController.getRegisteredMembers());
         self.simController = SimController(self.logger, self.viewObj, self.memberController.getRegisteredMembers());
         self.welcomeMessage();

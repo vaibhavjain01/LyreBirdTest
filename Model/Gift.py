@@ -24,9 +24,3 @@ class Gift(object):
         return: (str) The bringer's name
         '''
         return self.broughtBy;
-    
-    def setBroughtBy(self, broughtBy):
-        '''
-        Function to change the bringer's name. Never used in current scope.
-        '''
-        self.broughtBy = broughtBy;
