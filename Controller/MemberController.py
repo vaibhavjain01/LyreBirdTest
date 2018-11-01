@@ -196,3 +196,5 @@ class MemberController(object):
                 self.addMemberToDict(tokens[0], tokens[1]);
             else:
                 self.addMemberToDict(tokens[0]);
+        
+        return len(self.registeredMembers);
