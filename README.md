@@ -4,8 +4,10 @@ Automatic Gift Exchange
 For installation of pydev:
 http://www.pydev.org/manual_101_install.html
 
+
 1) Import the project as existing python project in eclipse with pydev
-2) Run __main.py__
+2) Run __main.py__  to launch the game simulator
+3) Run UnitTest\RunAllTests as Unit Test to run all unit tests
 
 
 
